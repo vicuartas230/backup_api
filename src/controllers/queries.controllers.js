@@ -15,15 +15,8 @@ export const createQuery = async (req, res) => {
 
     try {
         const rows = await conn.execute(
-            'INSERT INTO queries(firstName, lastName, email, phone, city) \
-VALUES (?, ?, ?, ?, ?)',
-            [
-                data.firstName,
-                data.lastName,
-                data.email,
-                data.phone,
-                data.city
-            ]
+            'INSERT INTO queries(query) VALUES (?)',
+            [data.query]
         );
     
         const [result] = await conn.execute(
