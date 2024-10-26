@@ -1,3 +1,4 @@
+import fetch from "node-fetch";
 import { conn } from "../db.js";
 
 export const getQueries = async (req, res) => {
@@ -34,4 +35,19 @@ export const createQuery = async (req, res) => {
 
         return res.status(500).json({message: "Internal server error."});
     }
+};
+
+export const getContacts = async (req, res) => {
+    const query = req.query.q;
+    const response = await fetch(
+        `https://imaginecx--tst2.custhelp.com/services/rest/connect/v1.3/contacts?q=${query}`,
+        {
+            headers: {
+                'Authorization': 'Basic ' + Buffer.from('ICXCandidate:Welcome2024').toString('base64'),
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+    const data = await response.json();
+    res.send(data);
 };
